@@ -13,32 +13,7 @@ void main() {
         backgroundColor: Colors.blueAccent,
       ),
 
-      body: Column(
-        children: <Widget>[
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.monetization_on),
-              title: Text('100.0'),
-              subtitle: Text('123-4'),
-            ),
-
-          ),Card(
-            child: ListTile(
-              leading: Icon(Icons.monetization_on),
-              title: Text('200.0'),
-              subtitle: Text('456-7'),
-            ),
-
-          ),Card(
-            child: ListTile(
-              leading: Icon(Icons.monetization_on),
-              title: Text('300.0'),
-              subtitle: Text('890-1'),
-            ),
-          ),
-
-        ],
-      ),
+      body: TransferList(),
 
       floatingActionButton: FloatingActionButton(
         onPressed: () => print("Teste botão"),
@@ -50,4 +25,38 @@ void main() {
 
     ),
   ));
+}
+
+class TransferList extends StatelessWidget {
+  const TransferList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.monetization_on),
+            title: Text('100.0'),
+            subtitle: Text('1234-5'),
+          ),
+
+        ),Card(
+          child: ListTile(
+            leading: Icon(Icons.monetization_on),
+            title: Text('200.0'),
+            subtitle: Text('6789-1'),
+          ),
+
+        ),Card(
+          child: ListTile(
+            leading: Icon(Icons.monetization_on),
+            title: Text('300.0'),
+            subtitle: Text('2345-6'),
+          ),
+        ),
+
+      ],
+    );
+  }
 }
