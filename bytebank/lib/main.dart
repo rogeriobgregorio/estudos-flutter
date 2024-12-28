@@ -34,29 +34,29 @@ class TransferList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.monetization_on),
-            title: Text('100.0'),
-            subtitle: Text('1234-5'),
-          ),
-
-        ),Card(
-          child: ListTile(
-            leading: Icon(Icons.monetization_on),
-            title: Text('200.0'),
-            subtitle: Text('6789-1'),
-          ),
-
-        ),Card(
-          child: ListTile(
-            leading: Icon(Icons.monetization_on),
-            title: Text('300.0'),
-            subtitle: Text('2345-6'),
-          ),
-        ),
-
+        TransferItem('1000.0', '1234-5'),
+        TransferItem('2000.0', '6789-1'),
+        TransferItem('3000.0', '2345-6')
       ],
+    );
+  }
+}
+
+class TransferItem extends StatelessWidget {
+
+  final String value;
+  final String accountNumber;
+
+  const TransferItem(this.value, this.accountNumber, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Icon(Icons.monetization_on),
+        title: Text(value),
+        subtitle: Text(accountNumber),
+      ),
     );
   }
 }
