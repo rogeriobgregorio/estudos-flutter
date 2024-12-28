@@ -13,14 +13,38 @@ void main() {
         backgroundColor: Colors.blueAccent,
       ),
 
-      body: Container(
-        color: Colors.white,
-        child: Center(child: Text('Conteúdo da tela!')),
+      body: Column(
+        children: <Widget>[
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.monetization_on),
+              title: Text('100.0'),
+              subtitle: Text('123-4'),
+            ),
+
+          ),Card(
+            child: ListTile(
+              leading: Icon(Icons.monetization_on),
+              title: Text('200.0'),
+              subtitle: Text('456-7'),
+            ),
+
+          ),Card(
+            child: ListTile(
+              leading: Icon(Icons.monetization_on),
+              title: Text('300.0'),
+              subtitle: Text('890-1'),
+            ),
+          ),
+
+        ],
       ),
 
       floatingActionButton: FloatingActionButton(
         onPressed: () => print("Teste botão"),
         backgroundColor: Colors.blueAccent,
+        foregroundColor: Colors.white,
+        shape: CircleBorder(),
         child: Icon(Icons.add),
       ),
 
