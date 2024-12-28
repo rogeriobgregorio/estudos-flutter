@@ -34,9 +34,9 @@ class TransferList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        TransferItem('1000.0', '1234-5'),
-        TransferItem('2000.0', '6789-1'),
-        TransferItem('3000.0', '2345-6')
+        TransferItem(Transfer(1000.0, 12345)),
+        TransferItem(Transfer(2000.0, 67891)),
+        TransferItem(Transfer(3000.0, 2345-6)),
       ],
     );
   }
@@ -44,19 +44,26 @@ class TransferList extends StatelessWidget {
 
 class TransferItem extends StatelessWidget {
 
-  final String value;
-  final String accountNumber;
+  final Transfer _transfer;
 
-  const TransferItem(this.value, this.accountNumber, {super.key});
+  const TransferItem(this._transfer, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
         leading: Icon(Icons.monetization_on),
-        title: Text(value),
-        subtitle: Text(accountNumber),
+        title: Text(_transfer.value.toString()),
+        subtitle: Text(_transfer.accountNumber.toString()),
       ),
     );
   }
+}
+
+class Transfer {
+
+   final double value;
+   final int accountNumber;
+
+   Transfer(this.value, this.accountNumber);
 }
