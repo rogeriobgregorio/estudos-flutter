@@ -1,8 +1,46 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: Scaffold(
+void main() => runApp(ByteBankApp());
+
+class ByteBankApp extends StatelessWidget {
+  const ByteBankApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: TransferForm(),
+      ),
+    );
+  }
+}
+
+class TransferForm extends StatelessWidget {
+  const TransferForm({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Criando Transferência',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: Text('Teste'),
+    );
+  }
+}
+
+class TransferList extends StatelessWidget {
+  const TransferList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
         title: Text(
           'Transferências',
@@ -12,9 +50,13 @@ void main() {
         ),
         backgroundColor: Colors.blueAccent,
       ),
-
-      body: TransferList(),
-
+      body: Column(
+        children: <Widget>[
+          TransferItem(Transfer(1000.0, 12345)),
+          TransferItem(Transfer(2000.0, 67891)),
+          TransferItem(Transfer(3000.0, 23456)),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => print("Teste botão"),
         backgroundColor: Colors.blueAccent,
@@ -22,28 +64,11 @@ void main() {
         shape: CircleBorder(),
         child: Icon(Icons.add),
       ),
-
-    ),
-  ));
-}
-
-class TransferList extends StatelessWidget {
-  const TransferList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TransferItem(Transfer(1000.0, 12345)),
-        TransferItem(Transfer(2000.0, 67891)),
-        TransferItem(Transfer(3000.0, 2345-6)),
-      ],
     );
   }
 }
 
 class TransferItem extends StatelessWidget {
-
   final Transfer _transfer;
 
   const TransferItem(this._transfer, {super.key});
@@ -61,9 +86,8 @@ class TransferItem extends StatelessWidget {
 }
 
 class Transfer {
+  final double value;
+  final int accountNumber;
 
-   final double value;
-   final int accountNumber;
-
-   Transfer(this.value, this.accountNumber);
+  Transfer(this.value, this.accountNumber);
 }
