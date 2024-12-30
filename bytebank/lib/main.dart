@@ -16,7 +16,11 @@ class ByteBankApp extends StatelessWidget {
 }
 
 class TransferForm extends StatelessWidget {
-  const TransferForm({super.key});
+  final TextEditingController _accountNumberFieldController =
+      TextEditingController();
+  final TextEditingController _valueFieldController = TextEditingController();
+
+  TransferForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +39,7 @@ class TransferForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
+              controller: _accountNumberFieldController,
               style: TextStyle(
                 fontSize: 24.0,
               ),
@@ -48,6 +53,7 @@ class TransferForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
+              controller: _valueFieldController,
               style: TextStyle(
                 fontSize: 24.0,
               ),
@@ -60,7 +66,13 @@ class TransferForm extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () => print("Teste botão"),
+            onPressed: () {
+              debugPrint("Teste botão");
+              final double? value = double.tryParse(_valueFieldController.text);
+              final int? accountNumber = int.tryParse(_accountNumberFieldController.text);
+              final transferCreated = Transfer(value!, accountNumber!);
+              debugPrint('$transferCreated');
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blueAccent,
               foregroundColor: Colors.white,
@@ -128,4 +140,9 @@ class Transfer {
   final int accountNumber;
 
   Transfer(this.value, this.accountNumber);
+
+  @override
+  String toString() {
+    return 'Transfer{value: $value, accountNumber: $accountNumber}';
+  }
 }
