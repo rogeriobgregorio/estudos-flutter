@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import '../components/editor.dart';
 import '../models/transfer.dart';
 
+const String _titleAppBar = 'Criando Transferência';
+const String _labelAccountNumberField = 'Número da conta';
+const String _hintAccountNumberField = '0000';
+const String _labelValueField = 'Valor';
+const String _hintValueField = '0000';
+const String _textButton = 'Confirmar';
+
 class TransferForm extends StatefulWidget {
   const TransferForm({super.key});
 
@@ -21,7 +28,7 @@ class TransferFormState extends State<TransferForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Criando Transferência',
+          _titleAppBar,
           style: TextStyle(
             color: Colors.white,
           ),
@@ -30,17 +37,19 @@ class TransferFormState extends State<TransferForm> {
       body: Column(
         children: <Widget>[
           Editor(
-              controller: _accountNumberFieldController,
-              label: 'Número da conta',
-              hint: '0000'),
+            controller: _accountNumberFieldController,
+            label: _labelAccountNumberField,
+            hint: _hintAccountNumberField,
+          ),
           Editor(
-              controller: _valueFieldController,
-              label: 'Valor',
-              hint: '0000',
-              icon: Icons.monetization_on),
+            controller: _valueFieldController,
+            label: _labelValueField,
+            hint: _hintValueField,
+            icon: Icons.monetization_on,
+          ),
           ElevatedButton(
             onPressed: () => _createTransfer(context),
-            child: Text('Confirmar'),
+            child: Text(_textButton),
           ),
         ],
       ),
