@@ -102,14 +102,20 @@ class Editor extends StatelessWidget {
   }
 }
 
-class TransferList extends StatelessWidget {
-  final List<Transfer> _transfers = List.empty(growable: true);
+class TransferList extends StatefulWidget {
+  const TransferList({super.key});
 
-  TransferList({super.key});
+  @override
+  State<StatefulWidget> createState() {
+    return TransferListState();
+  }
+}
+
+class TransferListState extends State<TransferList> {
+  final List<Transfer> _transfers = [];
 
   @override
   Widget build(BuildContext context) {
-    _transfers.add(Transfer(100.0, 1111));
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -133,7 +139,11 @@ class TransferList extends StatelessWidget {
             return TransferForm();
           }));
           future.then((transferReceived) {
-            _transfers.add(transferReceived);
+            if (transferReceived != null) {
+              setState(() {
+                _transfers.add(transferReceived);
+              });
+            }
           });
         },
         backgroundColor: Colors.blueAccent,
