@@ -15,12 +15,20 @@ class ByteBankApp extends StatelessWidget {
   }
 }
 
-class TransferForm extends StatelessWidget {
+class TransferForm extends StatefulWidget {
+  const TransferForm({super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return TransferFormState();
+  }
+}
+
+class TransferFormState extends State<TransferForm> {
   final TextEditingController _accountNumberFieldController =
       TextEditingController();
   final TextEditingController _valueFieldController = TextEditingController();
-
-  TransferForm({super.key});
 
   @override
   Widget build(BuildContext context) {
