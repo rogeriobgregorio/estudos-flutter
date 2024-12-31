@@ -8,8 +8,25 @@ class ByteBankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: TransferList(),
+      home: TransferList(),
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        primaryColor: Colors.green[900],
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.green[900],
+          iconTheme: IconThemeData(color: Colors.white),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Colors.green[900],
+          foregroundColor: Colors.white,
+          shape: CircleBorder(),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green[900],
+            foregroundColor: Colors.white,
+          ),
+        ),
       ),
     );
   }
@@ -20,7 +37,6 @@ class TransferForm extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return TransferFormState();
   }
 }
@@ -40,8 +56,6 @@ class TransferFormState extends State<TransferForm> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.blueAccent,
-        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Column(
         children: <Widget>[
@@ -56,10 +70,6 @@ class TransferFormState extends State<TransferForm> {
               icon: Icons.monetization_on),
           ElevatedButton(
             onPressed: () => _createTransfer(context),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blueAccent,
-              foregroundColor: Colors.white,
-            ),
             child: Text('Confirmar'),
           ),
         ],
@@ -132,7 +142,6 @@ class TransferListState extends State<TransferList> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.blueAccent,
       ),
       body: ListView.builder(
         itemCount: _transfers.length,
@@ -154,9 +163,6 @@ class TransferListState extends State<TransferList> {
             }
           });
         },
-        backgroundColor: Colors.blueAccent,
-        foregroundColor: Colors.white,
-        shape: CircleBorder(),
         child: Icon(Icons.add),
       ),
     );
