@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../components/transfer_item.dart';
 import '../models/transfer.dart';
 
+const String _titleAppBar = 'Transferências';
+
 class TransferList extends StatefulWidget {
   const TransferList({super.key});
 
@@ -20,7 +22,7 @@ class TransferListState extends State<TransferList> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Transferências',
+          _titleAppBar,
           style: TextStyle(
             color: Colors.white,
           ),
@@ -34,20 +36,23 @@ class TransferListState extends State<TransferList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final Future future =
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return TransferForm();
-          }));
-          future.then((transferReceived) {
-            if (transferReceived != null) {
-              setState(() {
-                _transfers.add(transferReceived);
-              });
-            }
-          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return TransferForm();
+            }),
+          ).then(
+            (transferReceived) => _updateTransferList(transferReceived),
+          );
         },
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  void _updateTransferList(Transfer transfer) {
+    setState(() {
+      _transfers.add(transfer);
+    });
   }
 }
