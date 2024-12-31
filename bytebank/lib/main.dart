@@ -9,7 +9,7 @@ class ByteBankApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: TransferForm(),
+        body: TransferList(),
       ),
     );
   }
@@ -33,46 +33,21 @@ class TransferForm extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.blueAccent,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
+          Editor(
               controller: _accountNumberFieldController,
-              style: TextStyle(
-                fontSize: 24.0,
-              ),
-              decoration: InputDecoration(
-                labelText: 'Número da conta',
-                hintText: '0000',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
+              label: 'Número da conta',
+              hint: '0000'),
+          Editor(
               controller: _valueFieldController,
-              style: TextStyle(
-                fontSize: 24.0,
-              ),
-              decoration: InputDecoration(
-                icon: Icon(Icons.monetization_on),
-                labelText: 'Valor',
-                hintText: '0.00',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-          ),
+              label: 'Valor',
+              hint: '0000',
+              icon: Icons.monetization_on),
           ElevatedButton(
-            onPressed: () {
-              debugPrint("Teste botão");
-              final double? value = double.tryParse(_valueFieldController.text);
-              final int? accountNumber = int.tryParse(_accountNumberFieldController.text);
-              final transferCreated = Transfer(value!, accountNumber!);
-              debugPrint('$transferCreated');
-            },
+            onPressed: () => _createTransfer(context),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blueAccent,
               foregroundColor: Colors.white,
@@ -83,13 +58,58 @@ class TransferForm extends StatelessWidget {
       ),
     );
   }
+
+  void _createTransfer(BuildContext context) {
+    final int? accountNumber = int.tryParse(_accountNumberFieldController.text);
+    final double? value = double.tryParse(_valueFieldController.text);
+    if (accountNumber != null && value != null) {
+      final transferCreated = Transfer(value, accountNumber);
+      Navigator.pop(context, transferCreated);
+    }
+  }
 }
 
-class TransferList extends StatelessWidget {
-  const TransferList({super.key});
+class Editor extends StatelessWidget {
+  final TextEditingController controller;
+  final String label;
+  final String hint;
+  final IconData? icon;
+
+  const Editor(
+      {required this.controller,
+      required this.label,
+      required this.hint,
+      this.icon,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: TextField(
+        controller: controller,
+        style: TextStyle(
+          fontSize: 24.0,
+        ),
+        decoration: InputDecoration(
+          icon: icon != null ? Icon(icon) : null,
+          labelText: label,
+          hintText: hint,
+        ),
+        keyboardType: TextInputType.number,
+      ),
+    );
+  }
+}
+
+class TransferList extends StatelessWidget {
+  final List<Transfer> _transfers = List.empty(growable: true);
+
+  TransferList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    _transfers.add(Transfer(100.0, 1111));
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -100,15 +120,22 @@ class TransferList extends StatelessWidget {
         ),
         backgroundColor: Colors.blueAccent,
       ),
-      body: Column(
-        children: <Widget>[
-          TransferItem(Transfer(1000.0, 12345)),
-          TransferItem(Transfer(2000.0, 67891)),
-          TransferItem(Transfer(3000.0, 23456)),
-        ],
+      body: ListView.builder(
+        itemCount: _transfers.length,
+        itemBuilder: (context, index) {
+          return TransferItem(_transfers[index]);
+        },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => print("Teste botão"),
+        onPressed: () {
+          final Future future =
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return TransferForm();
+          }));
+          future.then((transferReceived) {
+            _transfers.add(transferReceived);
+          });
+        },
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
         shape: CircleBorder(),
